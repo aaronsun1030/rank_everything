@@ -2,9 +2,9 @@ import os
 from time import time
 from random import choice
 
-class item:
+class Item:
     def __init__(self, line):
-        self.item_id, self.name, self.description, self.thoughts = *(line[:4])
+        self.item_id, self.name, self.description, self.thoughts = line[:4]
         self.tags = line[4:]
         self.list_names = {}
         
@@ -53,7 +53,7 @@ class item:
                 if file == list_name + '.csv':
                     return filepath
     
-    def get_list_name(self):
+    def get_list_name(self, list_id):
         if not self.list_names:
             with open('lists/list_ids.csv', mode='r') as file:
                 # reading the CSV file 
@@ -62,17 +62,18 @@ class item:
                 # displaying the contents of the CSV file 
                 for line in csvFile[1:]: 
                     self.list_names[line[1]] = line[0]
-        return self.list_names[list_name]
+        return self.list_names[list_id]
         
         
-class comparison:
+class Comparison:
     def __init__(self, line):
-        self.better, self.worse, self.date = *(line)
+        self.better, self.worse, self.date = line
         
     def __contains__(self, item):
         return item.item_id == self.better or item.item_id == self.worse
 
-class comparator:
+
+class Comparator:
     
     def __init__(self):
         self.comp_file = '/comparisons/aaron_comparisons.csv'
@@ -104,7 +105,7 @@ class comparator:
         with open(self.comp_file, 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(l)
-        self.comp_list.append(l)
+        self.comp_list.append(Comparison(l))
         
     """
     LIST MANAGEMENT
@@ -117,7 +118,7 @@ class comparator:
             for file in files:
                 filepath = subdir + os.sep + file
                 if file.endswith('.csv'):
-                    l.append(file[:-4]))
+                    l.append(file[:-4])
         return l
         
     def add_list(self, list_name):
@@ -129,7 +130,7 @@ class comparator:
                 # reading the CSV file 
                 csvFile = csv.reader(file)
                 for line in csvFile[1:]:
-                    self.items.append(item(line))
+                    self.items.append(Item(line))
     
     def remove_list(self, list_name):
         """ removes the list from being selected """
@@ -168,9 +169,4 @@ class comparator:
                 for line in csvFile[1:]: 
                     self.list_ids[line[0]] = line[1]
         return self.list_ids[list_name]
-            
-            
-            
-        
-        
         
