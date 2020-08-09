@@ -1,12 +1,12 @@
-List Name	2-digit Hex ID
-emotions	00
-ace_attorney	01
-gov	02
-cs_related	03
-activities	04
-birds	05
-household_items	06
-math	07
-music	08
-people	09
-places	0A
+List Name,2-digit Hex ID
+emotions,0x00
+ace_attorney,0x01
+gov,0x02
+cs_related,0x03
+activities,0x04
+birds,0x05
+household_items,0x06
+math,0x07
+music,0x08
+people,0x09
+places,0x0a

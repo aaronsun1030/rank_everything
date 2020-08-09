@@ -1,68 +1,46 @@
+import csv
+import json
 import os
 from time import time
 from random import choice
 
+
 class Item:
-    def __init__(self, line):
-        self.item_id, self.name, self.description, self.thoughts = line[:4]
+    def __init__(self, line, thought, comparator=None):
+        self.item_id, self.name, self.description = line[:3]
+        self.thoughts = thought
         self.tags = line[4:]
         self.list_names = {}
+        self.comparator = comparator
+
+    """
+    GET FIELDS
+    """
+    def get_item_id(self):
+        """ get unique 5 digit hex ID for this item """
+        return self.item_id
+
+    def get_name(self):
+        """ get this item's description """
+        return self.description
+
+    def get_tags(self):
+        """ get this item's tags as an array """
+        return self.tags
+
+    def get_thoughts(self):
+        """ get the user's thoughts about this item """
+        return self.thoughts
         
     """
     UPDATE ITEM
     """
     
     def update_thoughts(self, thought):
-        this.overwrite_csv(3, thought)
-        
-    def update_description(self, description):
-        this.overwrite_csv(2, description)
+        self.thoughts = thought
+        self.comparator.update_item_thoughts(self.item_id, self.thoughts)
     
-    """
-    INTERNAL FUNCTIONS
-    """
-    
-    def overwrite_csv(self, index, update):
-        filepath = get_path(self.get_list_name(self.item_id[:2]))
-        old = []
-        
-        line = 0
-        item_line = 0
-        # Read all data from the csv file.
-        with open(filepath, 'rb') as b:
-            line += 1
-            item = csv.reader(b)
-            old.extend(item)
-            if old[-1][0] == self.item_id:
-                item_line = line
 
-        # data to override in the format {line_num_to_override:data_to_write}. 
-        line_to_override = {line: old[item_line][0:index] + [update] + old[item_line][index+1:]}
-
-        # Write data to the csv file and replace the lines in the line_to_override dict.
-        with open(filepath, 'wb') as b:
-            writer = csv.writer(b)
-            for line, row in enumerate(old):
-                 data = line_to_override.get(line, row)
-                 writer.writerow(data)
-    
-    def get_path(list_name):
-        for subdir, dirs, files in os.walk(rootdir):
-            for file in files:
-                filepath = subdir + os.sep + file
-                if file == list_name + '.csv':
-                    return filepath
-    
-    def get_list_name(self, list_id):
-        if not self.list_names:
-            with open('lists/list_ids.csv', mode='r') as file:
-                # reading the CSV file 
-                csvFile = csv.reader(file)
-              
-                # displaying the contents of the CSV file 
-                for line in csvFile[1:]: 
-                    self.list_names[line[1]] = line[0]
-        return self.list_names[list_id]
         
         
 class Comparison:
@@ -74,63 +52,78 @@ class Comparison:
 
 
 class Comparator:
+    """ Object which picks items to compare from selected lists and can write comparisons """
     
     def __init__(self):
         self.comp_file = '/comparisons/aaron_comparisons.csv'
+        self.thoughts_file = '/comparisons/aaron_thoughts.json'
+        self.thoughts, self.comp_list = None, None
+        self.load_comps()
+        self.load_thoughts()
+
         self.list_names, self.items = [], []
-        self.comp_list = self.read_comps()
         self.list_ids = {}
+
+        self.item1, self.item2 = None, None
         
     """
     COMPARISON FUNCTIONS
     """
-    
-    def get_pair(self):
-        """ returns a pair of item objects from selected lists which have never been compared """
-        item1, item2 = choice(self.items), choice(self.items)
-        if item2 == item1:
-            return self.get_pair()
+
+    def shuffle_pair(self):
+        """ changes the pair of item objects associated with this object
+            such that they are from selected lists and have never been compared """
+        self.item1, self.item2 = choice(self.items), choice(self.items)
+        if self.item2 == self.item1:
+            self.shuffle_pair()
         done = False
-        for comp in comp_list:
-            if item1 in comp and item2 in comp:
+        for comp in self.comp_list:
+            if self.item1 in comp and self.item2 in comp:
                 done = True
         if done:
-            return self.get_pair()
+            self.shuffle_pair()
+
+    def get_pair(self):
+        """ returns the pair of items associated with this object """
+        return self.item1, self.item2
+
+    def select_preferred(self, item_num):
+        """ selects the preferred item_num (1 or 2) and adds the comparison to the list """
+        if item_num == 1:
+            self.add_comparison(self.item1, self.item2)
         else:
-            return item1, item2
-            
-    def add_comparison(self, better, worse):
-        """ adds a new comparison """
-        l = [better.item_id, worse.item_id, time()]
-        with open(self.comp_file, 'a', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(l)
-        self.comp_list.append(Comparison(l))
-        
+            self.add_comparison(self.item2, self.item1)
+
     """
     LIST MANAGEMENT
     """
         
     def get_lists(self):
-        """ returns a list of the names of all cateories """
+        """ returns a list of the names of all categories """
         l = []
-        for subdir, dirs, files in os.walk(rootdir):
+        for subdir, dirs, files in os.walk("/lists/"):
             for file in files:
                 filepath = subdir + os.sep + file
                 if file.endswith('.csv'):
                     l.append(file[:-4])
         return l
-        
+
     def add_list(self, list_name):
         """ adds lists to potential choices """
         if list_name not in self.list_names:
             self.list_names.append(list_name)
-            path = get_path(list_name)
+            path = self.get_path(list_name)
             with open(path, mode='r') as file:
                 # reading the CSV file 
                 csvFile = csv.reader(file)
                 for line in csvFile[1:]:
-                    self.items.append(Item(line))
+                    if line:
+                        thought = self.thoughts.get(line[0])
+                        if not thought:
+                            thought = ""
+                        else:
+                            thought = thought["thoughts"]
+                        self.items.append(Item(line, thought, comparator=self))
     
     def remove_list(self, list_name):
         """ removes the list from being selected """
@@ -144,16 +137,41 @@ class Comparator:
     """
     INTERNAL FUNCTIONS
     """
-    
-    def load_comps(self):
-        with open(comp_file, mode='r') as file:
-            # reading the CSV file 
+    def add_comparison(self, better, worse):
+        """ adds a new comparison """
+        l = [better.item_id, worse.item_id, time()]
+        with open(self.comp_file, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(l)
+        self.comp_list.append(Comparison(l))
+
+    def load_comps(self, filename):
+        with open(filename, mode='r') as file:
+            # reading the CSV file
             csvFile = csv.reader(file)
             for line in csvFile[1:]:
-                self.comp_list.append(comparison(line))
+                if line:
+                    self.comp_list.append(Comparison(line))
+
+    def load_thoughts(self, filename):
+        with open(filename, mode='r') as f:
+            self.thoughts = json.load(f)
+
+    def update_item_thoughts(self, item_id, thought):
+        self.thoughts[item_id] = thought
+        a_dict = {item_id: {"thoughts": thought,
+                            "time": time()}}
+
+        with open(self.thoughts_file) as f:
+            data = json.load(f)
+
+        data.update(a_dict)
+
+        with open(self.thoughts_file, 'w') as f:
+            json.dump(data, f)
                     
-    def get_path(list_name):
-        for subdir, dirs, files in os.walk(rootdir):
+    def get_path(self, list_name):
+        for subdir, dirs, files in os.walk("/lists/"):
             for file in files:
                 filepath = subdir + os.sep + file
                 if file == list_name + '.csv':
@@ -166,7 +184,7 @@ class Comparator:
                 csvFile = csv.reader(file)
               
                 # displaying the contents of the CSV file 
-                for line in csvFile[1:]: 
-                    self.list_ids[line[0]] = line[1]
+                for line in csvFile[1:]:
+                    if line:
+                        self.list_ids[line[0]] = line[1]
         return self.list_ids[list_name]
-        
