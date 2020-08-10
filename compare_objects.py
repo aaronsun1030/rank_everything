@@ -21,6 +21,10 @@ class Item:
         return self.item_id
 
     def get_name(self):
+        """ get this item's name """
+        return self.name
+
+    def get_description(self):
         """ get this item's description """
         return self.description
 
