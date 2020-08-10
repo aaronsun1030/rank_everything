@@ -116,7 +116,7 @@ class Comparator:
             with open(path, mode='r') as file:
                 # reading the CSV file 
                 csvFile = csv.reader(file)
-                for line in csvFile[1:]:
+                for line in list(csvFile)[1:]:
                     if line:
                         thought = self.thoughts.get(line[0])
                         if not thought:
@@ -149,7 +149,7 @@ class Comparator:
         with open(filename, mode='r') as file:
             # reading the CSV file
             csvFile = csv.reader(file)
-            for line in csvFile[1:]:
+            for line in list(csvFile)[1:]:
                 if line:
                     self.comp_list.append(Comparison(line))
 
@@ -184,7 +184,7 @@ class Comparator:
                 csvFile = csv.reader(file)
               
                 # displaying the contents of the CSV file 
-                for line in csvFile[1:]:
+                for line in list(csvFile)[1:]:
                     if line:
                         self.list_ids[line[0]] = line[1]
         return self.list_ids[list_name]
