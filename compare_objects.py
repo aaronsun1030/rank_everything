@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+from json import JSONDecodeError
 from time import time
 from random import choice
 
@@ -10,7 +11,6 @@ class Item:
         self.item_id, self.name, self.description = line[:3]
         self.thoughts = thought
         self.tags = line[4:]
-        self.list_names = {}
         self.comparator = comparator
 
     """
@@ -55,13 +55,13 @@ class Comparator:
     """ Object which picks items to compare from selected lists and can write comparisons """
     
     def __init__(self):
-        self.comp_file = '/comparisons/aaron_comparisons.csv'
-        self.thoughts_file = '/comparisons/aaron_thoughts.json'
-        self.thoughts, self.comp_list = None, None
-        self.load_comps()
-        self.load_thoughts()
+        self.comp_file = os.getcwd() + '/comparisons/aaron_comparisons.csv'
+        self.thoughts_file = os.getcwd() + '/comparisons/aaron_thoughts.json'
+        self.thoughts, self.comp_list = {}, []
+        self.load_comps(self.comp_file)
+        self.load_thoughts(self.thoughts_file)
 
-        self.list_names, self.items = [], []
+        self.items, self.list_names = [], []
         self.list_ids = {}
 
         self.item1, self.item2 = None, None
@@ -101,10 +101,10 @@ class Comparator:
     def get_lists(self):
         """ returns a list of the names of all categories """
         l = []
-        for subdir, dirs, files in os.walk("/lists/"):
+        for subdir, dirs, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
                 filepath = subdir + os.sep + file
-                if file.endswith('.csv'):
+                if file.endswith('.csv') and file != "list_ids.csv":
                     l.append(file[:-4])
         return l
 
@@ -117,7 +117,7 @@ class Comparator:
                 # reading the CSV file 
                 csvFile = csv.reader(file)
                 for line in list(csvFile)[1:]:
-                    if line:
+                    if line and line[0]:
                         thought = self.thoughts.get(line[0])
                         if not thought:
                             thought = ""
@@ -130,8 +130,9 @@ class Comparator:
         if list_name in self.list_names:
             list_id = self.get_list_id(list_name)
             self.list_names.remove(list_name)
-            for item in self.items:
-                if item.item_id[:2] == list_id:
+            for i in range(len(self.items)-1, -1, -1):
+                item = self.items[i]
+                if item.item_id[:4] == list_id:
                     self.items.remove(item)
                     
     """
@@ -155,7 +156,10 @@ class Comparator:
 
     def load_thoughts(self, filename):
         with open(filename, mode='r') as f:
-            self.thoughts = json.load(f)
+            try:
+                self.thoughts = json.load(f)
+            except JSONDecodeError:
+                pass
 
     def update_item_thoughts(self, item_id, thought):
         self.thoughts[item_id] = thought
@@ -171,7 +175,7 @@ class Comparator:
             json.dump(data, f)
                     
     def get_path(self, list_name):
-        for subdir, dirs, files in os.walk("/lists/"):
+        for subdir, dirs, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
                 filepath = subdir + os.sep + file
                 if file == list_name + '.csv':
@@ -188,3 +192,4 @@ class Comparator:
                     if line:
                         self.list_ids[line[0]] = line[1]
         return self.list_ids[list_name]
+
