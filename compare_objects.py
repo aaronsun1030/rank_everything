@@ -102,7 +102,7 @@ class Comparator:
     LIST MANAGEMENT
     """
         
-    def get_lists(self):
+    def get_all_lists(self):
         """ returns a list of the names of all categories """
         l = []
         for subdir, dirs, files in os.walk(os.getcwd() + "/lists/"):
@@ -111,6 +111,10 @@ class Comparator:
                 if file.endswith('.csv') and file != "list_ids.csv":
                     l.append(file[:-4])
         return l
+
+    def get_active_lists(self):
+        """ returns a list of active lists from which items can be selected """
+        return self.list_names
 
     def add_list(self, list_name):
         """ adds lists to potential choices """
