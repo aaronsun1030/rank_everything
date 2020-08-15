@@ -1,6 +1,7 @@
-from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
+
 
 import numpy as np
 import sys
@@ -8,7 +9,6 @@ import os
 import csv
 
 from utils import *
-from main_window_frames import *
 
 def e():
     sys.exit()
@@ -28,92 +28,111 @@ class App(QWidget):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        formLayout1 = QFormLayout()
-        formLayout2 = QFormLayout()
-        groupBox1 = QGroupBox("Group Box 1")
-        groupBox2 = QGroupBox("Group Box 2")
+        layoutCategorySection = QVBoxLayout()
+        layoutItem1Section = QVBoxLayout()
+        layoutItem2Section = QVBoxLayout()
+        groupBoxCategory = QGroupBox("Categories")
+        groupBoxItem1 = QGroupBox("Item 1")
+        groupBoxItem2 = QGroupBox("Item 2")
         
-        labelList1 = []
-        comboList1 = []
-        for i in range(30):
-            labelList1.append(QLabel("Label"))
-            comboList1.append(QPushButton("Click Me"))
-            formLayout1.addRow(labelList1[i], comboList1[i])
-        groupBox1.setLayout(formLayout1)
-        
-        labelList2 = []
-        comboList2 = []
-        for i in range(30):
-            labelList2.append(QLabel("Label"))
-            comboList2.append(QPushButton("Click Me"))
-            formLayout2.addRow(labelList2[i], comboList2[i])
-        groupBox2.setLayout(formLayout2)
-        
-        scroll1 = QScrollArea()
-        scroll1.setWidget(groupBox1)
-        scroll1.setWidgetResizable(True)
-        scroll1.setFixedHeight(900)
-        scroll1.setFixedWidth(500)
+        #=====================================================================#
+        # Left side scroll bar widgets/layouts
+        #=====================================================================#
 
-        scroll2 = QScrollArea()
-        scroll2.setWidget(groupBox2)
-        scroll2.setWidgetResizable(True)
-        scroll2.setFixedHeight(900)
-        scroll2.setFixedWidth(500)
+        ''' labels for selected categories '''
+        # create labels and initial NONE label
+        labelSelectedCategories = QLabel('Selected Categories', self)
+        labelSelectedCategories.setFont(QFont("Times",weight=QFont.Bold))
+        labelSelectedCategories.setFixedHeight(30)
+        labelNONE = QLabel('NONE', self)
+        labelNONE.setFixedHeight(30)
+
+        # create layout and add widgets to overall layout
+        self.layoutCategoriesSelected = QVBoxLayout()
+        self.layoutCategoriesSelected.addWidget(labelSelectedCategories)
+        self.layoutCategoriesSelected.addWidget(labelNONE)
+        layoutCategorySection.addLayout(self.layoutCategoriesSelected)
+
+        ''' buttons in categories '''
+        # define button and events
+        buttonUpdateCategories = QPushButton('Update List', self)
+        buttonUpdateCategories.clicked.connect(self.checkboxChanged)
+        buttonBeginRating = QPushButton('Begin Rating', self)
+        buttonBeginRating.clicked.connect(self.beginRating)
+
+        # create layout and add widgets to overall layout
+        self.layoutCategoryButtons = QHBoxLayout()
+        self.layoutCategoryButtons.addWidget(buttonUpdateCategories)
+        self.layoutCategoryButtons.addWidget(buttonBeginRating)
+        layoutCategorySection.addLayout(self.layoutCategoryButtons)
+
+        ''' category checkboxes '''
+        # get categories and create checkboxes
+        self.checkedCategories = [] # contains the current selected categories
+        self.categories = sorted(getCategoryNames())
+        for i in range(100):
+            self.categories.append(str(i+1))
+        self.layoutCategoryCheckboxes = QVBoxLayout()
+        self.checkboxCategories = self.categories.copy()
+        for i, v in enumerate(self.categories):
+            self.checkboxCategories[i] = QCheckBox(v, self)
+            self.layoutCategoryCheckboxes.addWidget(self.checkboxCategories[i])
+
+        # add to layout
+        layoutCategorySection.addLayout(self.layoutCategoryCheckboxes)
+        groupBoxCategory.setLayout(layoutCategorySection)
         
+        #=====================================================================#
+        # Middle scroll bar for item 1
+        #=====================================================================#
         
+        self.layoutItem1 = QVBoxLayout()
+        layoutItem1Section.addLayout(self.layoutItem1)
+        groupBoxItem1.setLayout(layoutItem1Section)
+        
+        #=====================================================================#
+        # Right scroll bar for item 2
+        #=====================================================================#
+
+        labelList3 = []
+        for i in range(100):
+            labelList3.append(QLabel("Label" + str(i)))
+            layoutItem2Section.addWidget(labelList3[i])
+        groupBoxItem2.setLayout(layoutItem2Section)
+        
+        #=====================================================================#
+        # Define scroll area and create final layout
+        #=====================================================================#
+
+        scrollCategory = QScrollArea()
+        scrollCategory.setWidget(groupBoxCategory)
+        scrollCategory.setWidgetResizable(True)
+        scrollCategory.setFixedHeight(900)
+        scrollCategory.setFixedWidth(300)
+
+        scrollItem1 = QScrollArea()
+        scrollItem1.setWidget(groupBoxItem1)
+        scrollItem1.setWidgetResizable(True)
+        scrollItem1.setFixedHeight(900)
+        scrollItem1.setFixedWidth(600)
+
+        scrollItem2 = QScrollArea()
+        scrollItem2.setWidget(groupBoxItem2)
+        scrollItem2.setWidgetResizable(True)
+        scrollItem2.setFixedHeight(900)
+        scrollItem2.setFixedWidth(600)
+
         layout = QHBoxLayout(self)
-        layout.addWidget(scroll1)
-        layout.addWidget(scroll2)
-        self.show()
-
-
-
-
-
-        # ''' Labels '''
-        # self.currentLists = QLabel('Current Lists', self)
-        # self.currentLists.move(25,25)
-       
-        # ''' Buttons '''
-        # self.selectCategories = QPushButton('Select Categories', self)
-        # self.selectCategories.move(25,50)
-        # self.selectCategories.clicked.connect(self.checkboxChanged)
+        layout.addWidget(scrollCategory)
+        layout.addWidget(scrollItem1)
+        layout.addWidget(scrollItem2)
         
-        # self.show_text = QPushButton('Show Text', self)
-        # self.show_text.clicked.connect(self.on_click_show_text)
-        # self.show_text.move(500,500)
+        self.show()
 
         # ''' Textbox '''
         # self.textbox = QLineEdit(self)
         # self.textbox.setText('Initial text')
         # self.textbox.move(500,600)
-
-        # ''' Checkbox '''
-        # self.createCheckboxes()
-        
-        # ''' Scroll Area '''
-        # self.scroll_area = QScrollArea()
-        # self.scroll_area.setFixedWidth(250)
-        # self.scroll_area.setWidgetResizable(True)
-        
-        # widget = QWidget()
-        # self.scroll_area.setWidget(widget)
-        # self.layout_scroll_area = QVBoxLayout(widget)
-        # self.layout_scroll_area.addWidget(self.show_text)
-        
-        # ''' Layout '''
-        # # self.grid.addWidget(self.check_box, 1, 0, alignment=Qt.AlignCenter)
-        # # self.grid.addWidget(self.button,    2, 0, alignment=Qt.AlignCenter)
-        # # self.grid.addWidget(self.show_text, 2, 1, alignment=Qt.AlignCenter)
-        # # self.grid.addWidget(self.textbox,   3, 0, alignment=Qt.AlignCenter)
-        # # self.grid.addWidget(self.scroll_area, 4, 0, alignment=Qt.AlignCenter)
-        # # self.setLayout(self.grid)
-        # self.layout = QVBoxLayout()
-        # self.layout.addWidget(self.scroll_area)
-        # self.setLayout(self.layout)
-        
-        # self.show()
 
     def on_click(self):
         print('button clicked')
@@ -140,27 +159,57 @@ class App(QWidget):
             print('Unchecked')
 
     def checkboxChanged(self):
-        print('here')
-        for i, v in enumerate(self.categoriesCheckBoxes):
-            print(v.text(), "True" if v.checkState() else "False")
+        print('detected change in checkboxes:')
+        # delete layout widgets and add base header
+        self.clearLayout(self.layoutCategoriesSelected)
+        labelSelectedCategories = QLabel('Selected Categories', self)
+        labelSelectedCategories.setFont(QFont("Times",weight=QFont.Bold))
+        labelSelectedCategories.setFixedHeight(30)
+        self.layoutCategoriesSelected.addWidget(labelSelectedCategories)
+        
+        # get checked categories
+        self.checkedCategories = []
+        for i, v in enumerate(self.checkboxCategories):
+            if v.checkState():
+                self.checkedCategories.append(v.text())
+        
+        # add
+        if self.checkedCategories == []:
+            print('nothing checked')
+            labelNONE = QLabel('NONE', self)
+            labelNONE.setFixedHeight(30)
+            self.layoutCategoriesSelected.addWidget(labelNONE)
+        else:
+            print(self.checkedCategories)
+            for name in self.checkedCategories: 
+                _labelName = QLabel(name, self)
+                _labelName.setFixedHeight(20)
+                self.layoutCategoriesSelected.addWidget(_labelName)
 
-    ''' Widgets '''
-    def createCheckboxes(self):
-        base = 50
-        for i, v in enumerate(self.categories):
-            self.categoriesCheckBoxes[i] = QCheckBox(v, self)
-            self.categoriesCheckBoxes[i].move(500,base)
-            base += 25            
+    def beginRating(self):
+        print('begin rating with selected categories:')
+        if self.checkedCategories == []:
+            print('no categories selected')
+            return
+        print(self.checkedCategories)
+        # self.renderItemLayout(item1, self.layoutItem1)
+        # self.renderItemLayout(item2, self.layoutItem2)
 
+
+        
+
+
+    def clearLayout(self, layout):
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+    
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     instance = App()
     app.exec_()
     print('Application closed')
-
-
-
-
 
 
 
