@@ -115,25 +115,59 @@ class App(QWidget):
         scrollCategory = QScrollArea()
         scrollCategory.setWidget(groupBoxCategory)
         scrollCategory.setWidgetResizable(True)
-        scrollCategory.setFixedHeight(900)
+        scrollCategory.setFixedHeight(800)
         scrollCategory.setFixedWidth(300)
 
         scrollItem1 = QScrollArea()
         scrollItem1.setWidget(groupBoxItem1)
         scrollItem1.setWidgetResizable(True)
-        scrollItem1.setFixedHeight(900)
+        scrollItem1.setFixedHeight(800)
         scrollItem1.setFixedWidth(600)
 
         scrollItem2 = QScrollArea()
         scrollItem2.setWidget(groupBoxItem2)
         scrollItem2.setWidgetResizable(True)
-        scrollItem2.setFixedHeight(900)
+        scrollItem2.setFixedHeight(800)
         scrollItem2.setFixedWidth(600)
+
+        #=====================================================================#
+        # Create prefer buttons
+        #=====================================================================#
+
+        layoutCompleteItem_1 = QVBoxLayout()
+        layoutCompleteItem_2 = QVBoxLayout()
+        
+        # prefer button 1 =================================================
+        buttonPreferItem1 = QPushButton('Prefer Item 1', self)
+        buttonPreferItem1.setStyleSheet("background-color: #a3f291")
+        buttonPreferItem1.clicked.connect(self.onClickPreferItem1)
+        
+        layoutCompleteItem_1.addWidget(scrollItem1)
+        layoutCompleteItem_1.addWidget(buttonPreferItem1)
+
+        # prefer button 2 =================================================
+        buttonPreferItem2 = QPushButton('Prefer Item 2', self)
+        buttonPreferItem2.setStyleSheet("background-color: #a3f291")
+        buttonPreferItem2.clicked.connect(self.onClickPreferItem2)
+
+        layoutCompleteItem_2.addWidget(scrollItem2)
+        layoutCompleteItem_2.addWidget(buttonPreferItem2)
+
+        # overall layout
+        widgetItemFrame_1 = QFrame()
+        widgetItemFrame_1.setLayout(layoutCompleteItem_1)
+
+        widgetItemFrame_2 = QFrame()
+        widgetItemFrame_2.setLayout(layoutCompleteItem_2)
+
+        #=====================================================================#
+        # Final layout
+        #=====================================================================# 
 
         layout = QHBoxLayout(self)
         layout.addWidget(scrollCategory)
-        layout.addWidget(scrollItem1)
-        layout.addWidget(scrollItem2)
+        layout.addWidget(widgetItemFrame_1)
+        layout.addWidget(widgetItemFrame_2)
         
         self.show()
 
@@ -143,6 +177,7 @@ class App(QWidget):
 
     def checkboxChanged(self):
         print('detected change in checkboxes:')
+        self.item1, self.item2 = None, None
         # delete layout widgets and add base header
         self.clearLayout(self.layoutCategoriesSelected)
         labelSelectedCategories = self.createLabelBold('Selected Categories')
@@ -169,6 +204,8 @@ class App(QWidget):
         print('begin rating with selected categories:')
         if self.checkedCategories == []:
             print('no categories selected')
+            self.clearLayout(self.layoutItem1)
+            self.clearLayout(self.layoutItem2)
             return
         print(self.checkedCategories)
 
@@ -181,20 +218,22 @@ class App(QWidget):
         print('shuffling items')
         self.comparator.shuffle_pair()
         self.item1, self.item2 = self.comparator.get_pair()
+
         self.renderItemLayout1(self.item1, self.layoutItem1)
         self.renderItemLayout2(self.item2, self.layoutItem2)
 
     def renderItemLayout1(self, item, layout):
-        # item id
+        # item id =================================================
         labelItemId = self.createLabelBold('ID')
         label_item_id = self.createLabel(item.get_item_id())
 
         layout.addWidget(labelItemId)
         layout.addWidget(label_item_id)
 
-        # item name
+        # item name =================================================
         labelItemName = self.createLabelBold('Name')
         self._item_name_1 = self.createQTextEdit(item.get_name())
+        self._item_name_1.setFixedHeight(30)
         b = QPushButton('Edit', self)
         b.clicked.connect(self.editName_1)
         
@@ -202,86 +241,109 @@ class App(QWidget):
         layout.addWidget(self._item_name_1)
         layout.addWidget(b)
 
-        # item description
+        # item description =================================================
         labelItemDescription = self.createLabelBold('Description')
         self._item_description_1 = self.createQTextEdit(item.get_description())
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editDescription_1)
         
         layout.addWidget(labelItemDescription)
         layout.addWidget(self._item_description_1)
-
-        # item tags
-        labelItemTags = self.createLabelBold('Tags')
-        self._item_tags_1 = self.createQTextEdit(str(item.get_tags()))
+        layout.addWidget(b)
         
-        layout.addWidget(labelItemTags)
-        layout.addWidget(self._item_tags_1)
-
-        # item thoughts
+        # item thoughts =================================================
         labelItemThoughts = self.createLabelBold('Thoughts')
         self._item_thoughts_1 = self.createQTextEdit(item.get_thoughts())
-        
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editThoughts_1)
+
         layout.addWidget(labelItemThoughts)
         layout.addWidget(self._item_thoughts_1)
+        layout.addWidget(b)
 
-        # prefer button
-        buttonPreferItem1 = QPushButton('Prefer Item 1', self)
-        buttonPreferItem1.clicked.connect(self.onClickPreferItem1)
+        # item tags =================================================
+        labelItemTags = self.createLabelBold('Tags')
         
-        layout.addWidget(buttonPreferItem1)
+        self._item_tags_1 = self.createQTextEdit(','.join(item.get_tags()))
+        self._item_tags_1.setFixedHeight(50)
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editTags_1)
+
+        layout.addWidget(labelItemTags)
+        layout.addWidget(self._item_tags_1)
+        layout.addWidget(b)
 
     def renderItemLayout2(self, item, layout):
-        # item id
+        # item id =================================================
         labelItemId = self.createLabelBold('ID')
         label_item_id = self.createLabel(item.get_item_id())
 
         layout.addWidget(labelItemId)
         layout.addWidget(label_item_id)
 
-        # item name
+        # item name =================================================
         labelItemName = self.createLabelBold('Name')
         self._item_name_2 = self.createQTextEdit(item.get_name())
+        self._item_name_2.setFixedHeight(30)
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editName_2)
         
         layout.addWidget(labelItemName)
         layout.addWidget(self._item_name_2)
+        layout.addWidget(b)
 
-        # item description
+        # item description =================================================
         labelItemDescription = self.createLabelBold('Description')
         self._item_description_2 = self.createQTextEdit(item.get_description())
-        
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editDescription_2)
+
         layout.addWidget(labelItemDescription)
         layout.addWidget(self._item_description_2)
+        layout.addWidget(b)
 
-        # item tags
-        labelItemTags = self.createLabelBold('Tags')
-        self._item_tags_2 = self.createQTextEdit(str(item.get_tags()))
-        
-        layout.addWidget(labelItemTags)
-        layout.addWidget(self._item_tags_2)
-
-        # item thoughts
+        # item thoughts =================================================
         labelItemThoughts = self.createLabelBold('Thoughts')
         self._item_thoughts_2 = self.createQTextEdit(item.get_thoughts())
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editThoughts_2)
         
         layout.addWidget(labelItemThoughts)
         layout.addWidget(self._item_thoughts_2)
+        layout.addWidget(b)
 
-        # prefer button
-        buttonPreferItem2 = QPushButton('Prefer Item 2', self)
-        buttonPreferItem2.clicked.connect(self.onClickPreferItem2)
-
-        layout.addWidget(buttonPreferItem2)
+        # item tags =================================================
+        labelItemTags = self.createLabelBold('Tags')
+        self._item_tags_2 = self.createQTextEdit(','.join(item.get_tags()))
+        self._item_tags_2.setFixedHeight(50)
+        b = QPushButton('Edit', self)
+        b.clicked.connect(self.editTags_2)
+        
+        layout.addWidget(labelItemTags)
+        layout.addWidget(self._item_tags_2)
+        layout.addWidget(b)
         
     def onClickPreferItem1(self):
+        if self.item1 == None or self.item2 == None:
+            print('No items selected')
+            return
+
         self.comparator.select_preferred(1)
-        self.comparator.shuffle_pair()
         self.clearLayout(self.layoutItem1)
         self.clearLayout(self.layoutItem2)
 
+        self.beginRating()
+
     def onClickPreferItem2(self):
+        if self.item1 == None or self.item2 == None:
+            print('No items selected')
+            return
+
         self.comparator.select_preferred(2)
-        self.comparator.shuffle_pair()
         self.clearLayout(self.layoutItem1)
         self.clearLayout(self.layoutItem2)
+
+        self.beginRating()
 
     def createLabelBold(self, name):
         label = QLabel(name, self)
@@ -307,8 +369,45 @@ class App(QWidget):
     
     ''' button handlers for editing text in csv '''
     def editName_1(self):
-        print('edit')
-
+        print('editing name 1')
+        self.item1.update_item("name", self._item_name_1.toPlainText())
+        self.on_click_success()
+    
+    def editName_2(self):
+        print('editing name 2')
+        self.item2.update_item("name", self._item_name_2.toPlainText())
+        self.on_click_success()
+    
+    def editDescription_1(self):
+        print('editing description 1')
+        self.item1.update_item("description", self._item_description_1.toPlainText())
+        self.on_click_success()
+    
+    def editDescription_2(self):
+        print('editing description 2')
+        self.item2.update_item("description", self._item_description_2.toPlainText())
+        self.on_click_success()
+    
+    def editThoughts_1(self):
+        print('editing thoughts 1')
+        self.item1.update_thoughts(self._item_thoughts_1.toPlainText())
+        self.on_click_success()
+    
+    def editThoughts_2(self):
+        print('editing thoughts 2')
+        self.item2.update_thoughts(self._item_thoughts_2.toPlainText())
+        self.on_click_success()
+    
+    def editTags_1(self):
+        print('editing tags 1')
+        self.item1.update_item("tags", self._item_tags_1.toPlainText().split(','))
+        self.on_click_success()
+    
+    def editTags_2(self):
+        print('editing tags 2')
+        self.item2.update_item("tags", self._item_tags_2.toPlainText().split(','))
+        self.on_click_success()
+    
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     instance = App()
