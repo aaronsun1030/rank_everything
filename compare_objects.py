@@ -126,9 +126,8 @@ class Comparator:
     def get_all_lists(self):
         """ returns a list of the names of all categories """
         l = []
-        for subdir, dirs, files in os.walk(os.getcwd() + "/lists/"):
+        for subdir, _, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
-                filepath = subdir + os.sep + file
                 if file.endswith('.csv') and file != "list_ids.csv":
                     l.append(file[:-4])
         return l
