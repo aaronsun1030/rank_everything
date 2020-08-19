@@ -5,7 +5,7 @@ TODO:
 
 Backend
     
-Frontend
+**Frontend**
 * access backend for selected lists
     * input list of "list names"
     * self.comparator.set_lists(list)
