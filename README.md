@@ -6,7 +6,7 @@ TODO:
 Backend
     
 Frontend
-    access backend for selected lists
-        input list of "list names"
-            self.comparator.set_lists(list)
+* access backend for selected lists
+    * input list of "list names"
+    * self.comparator.set_lists(list)
     
