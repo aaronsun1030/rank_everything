@@ -2,7 +2,7 @@ import csv
 import json
 import os
 from json import JSONDecodeError
-from time import time
+from time import time, ctime
 from random import choice
 
 
@@ -34,14 +34,17 @@ class Item:
 
     def get_thoughts(self):
         """ get the user's thoughts about this item """
-        return self.thoughts
+        formatted_thoughts = ""
+        for key, value in self.thoughts.items():
+            formatted_thoughts += ctime(key) + ": " + value + 2 * os.linesep
+        return formatted_thoughts
         
     """
     UPDATE ITEM
     """
     
-    def update_thoughts(self, thought):
-        self.thoughts = thought
+    def add_thought(self, thought):
+        self.thoughts[time()] = thought
         self.comparator.update_item_thoughts(self.item_id, self.thoughts)
 
     def update_item(self, field_name, new_field):
@@ -126,7 +129,7 @@ class Comparator:
     def get_all_lists(self):
         """ returns a list of the names of all categories """
         l = []
-        for subdir, _, files in os.walk(os.getcwd() + "/lists/"):
+        for _, _, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
                 if file.endswith('.csv') and file != "list_ids.csv":
                     l.append(file[:-4])
@@ -168,9 +171,7 @@ class Comparator:
                     if line and line[0]:
                         thought = self.thoughts.get(line[0])
                         if not thought:
-                            thought = ""
-                        else:
-                            thought = thought["thoughts"]
+                            thought = {}
                         self.items.append(Item(line, thought, comparator=self))
 
     def remove_list(self, list_name):
@@ -223,9 +224,13 @@ class Comparator:
                 pass
 
     def update_item_thoughts(self, item_id, thought):
-        self.thoughts[item_id] = thought
-        a_dict = {item_id: {"thoughts": thought,
-                            "time": time()}}
+        if item_id in self.thoughts:
+            previous_thoughts = {item_id: self.thoughts[item_id]}
+        else:
+            previous_thoughts = {item_id: {}}
+        previous_thoughts.update({item_id: thought})
+        a_dict = previous_thoughts
+        self.thoughts.update(a_dict)
 
         with open(self.thoughts_file) as f:
             data = json.load(f)
@@ -236,7 +241,7 @@ class Comparator:
             json.dump(data, f)
                     
     def get_path(self, list_name):
-        for subdir, dirs, files in os.walk(os.getcwd() + "/lists/"):
+        for subdir, _, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
                 filepath = subdir + os.sep + file
                 if file == list_name + '.csv':
@@ -267,3 +272,4 @@ class Comparator:
         for key, value in self.list_ids.items():
             if id == value:
                 return key
+
