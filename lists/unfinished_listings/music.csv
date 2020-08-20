@@ -1,4 +1,5 @@
 Item ID,Name,Description,Tag 1,Tag 2,Tag 3
+,Taylor Swift,"Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter. Her narrative songwriting, which often centers around her personal life, has received widespread media coverage.",Taylor Swift,Music,Artist
 0x08001,Taylor Swift (Album),A 2006 album by Taylor Swift.,Taylor Swift,Music,Album
 0x08002,Fearless (Album),A 2008 album by Taylor Swift.,Taylor Swift,Music,Album
 0x08003,Speak Now (Album),A 2010 album by Taylor Swift.,Taylor Swift,Music,Album
@@ -141,3 +142,80 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0808c,Betty,A song by Taylor Swift,Taylor Swift,Music,Song
 0x0808d,Peace,A song by Taylor Swift,Taylor Swift,Music,Song
 0x0808e,Hoax,A song by Taylor Swift,Taylor Swift,Music,Song
+,The Lakes,A song by Taylor Swift,,,
+,,,,,
+,Carly Rae Jepsen,"Carly Rae Jepsen (born November 21, 1985) is a Canadian singer, songwriter, and actress.",Carly Rae Jepsen,Music,Artist
+,Kiss,A 2012 album by Carly Rae Jepsen.,Carly Rae Jepsen,Music,Album
+,Emotion,A 2015 album by Carly Rae Jepsen.,Carly Rae Jepsen,Music,Album
+,Emotion Side B,A 2016 extended play by Carly Rae Jepsen.,Carly Rae Jepsen,Music,Album
+,Dedicated,A 2019 album by Carly Rae Jepsen.,Carly Rae Jepsen,Music,Album
+,Dedicated Side B,A 2020 album by Carly Rae Jepsen.,Carly Rae Jepsen,Music,Album
+,Tiny Little Bows,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,This Kiss,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Call Me Maybe,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Curiosity,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Good Time (ft Owl City),A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,More than a Memory,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Turn Me Up,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Hurt So Good,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Beautiful,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Tonight I'm Getting Over You,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Guitar String / Wedding Ring,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Your Heart Is a Muscle,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Drive,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Wrong Feels So Right,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Sweetie,A song by Carly Rae Jepsen in the album Kiss.,Carly Rae Jepsen,Music,Song
+,Run Away with Me,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Emotion,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,I Really Like You,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Gimme Love,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,All That,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Boy Problems,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Making the Most of the Night,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Your Type,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Let's Get Lost,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,LA Hallucinations,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Warm Blood,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,When I Needed You,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Black Heart,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,I Didn't Just Come Here to Dance,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Favorite Colour,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Never Get to Hold You,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,Love Again,A song by Carly Rae Jepsen in the album Emotion.,Carly Rae Jepsen,Music,Song
+,First Time,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Higher,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,The One,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Fever,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Body Language,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Cry,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Store,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Roses,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Cut to the Feeling,A song by Carly Rae Jepsen in the extended play Emotion Side B.,Carly Rae Jepsen,Music,Song
+,Julien,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,No Drug Like Me,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Now That I Found You,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Want You in My Room,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Everything He Needs,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Happy Not Knowing,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,I'll Be Your Girl,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Too Much,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,The Sound,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Automatically in Love,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Feels Right,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Right Words Wrong Time,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Real Love,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,For Sure,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,Party for One,A song by Carly Rae Jepsen in the album Dedicated.,Carly Rae Jepsen,Music,Song
+,This Love Isn't Crazy,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Window,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Felt This Way,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Stay Away,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,This Is What They Say,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Heartbeat,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Summer Love,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Fake Mona Lisa,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Let's Sort the Whole Thing Out,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Comeback,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Solo,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Now I Don't Hate California After All,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
+,Let's Be Friends,A song by Carly Rae Jepsen in the album Dedicated Side B.,Carly Rae Jepsen,Music,Song
