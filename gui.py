@@ -7,7 +7,6 @@ import sys
 import os
 import csv
 
-from utils import *
 from compare_objects import *
 from update_thoughts import *
 
@@ -81,7 +80,7 @@ class App(QWidget):
         ''' category checkboxes '''
         # get categories and create checkboxes
         self.checkedCategories = [] # contains the current selected categories
-        self.categories = sorted(getCategoryNames())
+        self.categories = sorted(self.comparator.get_all_lists())
         for i in range(100):
             self.categories.append(str(i+1))
         self.layoutCategoryCheckboxes = QVBoxLayout()
@@ -201,6 +200,7 @@ class App(QWidget):
             for name in self.checkedCategories: 
                 _labelName = self.createLabel(name)
                 self.layoutCategoriesSelected.addWidget(_labelName)
+        self.comparator.set_lists(self.checkedCategories)
 
     def beginRating(self):
         # clear layout and rebuild
@@ -208,15 +208,11 @@ class App(QWidget):
         self.clearLayout(self.layoutItem2)
 
         print('begin rating with selected categories:')
-        if self.checkedCategories == []:
+        if self.comparator.get_active_lists() == []:
             print('no categories selected')
             return
-        print(self.checkedCategories)
-
-        # add list
-        for name in self.checkedCategories:
-            self.comparator.add_list(name)
-        print('lists in comparator:', self.comparator.get_active_lists())
+        
+        print(self.comparator.get_active_lists())
 
         # shuffle
         print('shuffling items')
