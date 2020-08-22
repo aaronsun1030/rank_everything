@@ -7,5 +7,4 @@ TODO:
 * (none)
     
 **Frontend**
-* scaling
 
