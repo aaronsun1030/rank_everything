@@ -9,19 +9,21 @@ import csv
 
 from compare_objects import *
 from update_thoughts import *
+from scaling import *
 
 def e():
     sys.exit()
 
 class App(QWidget):
 
-    def __init__(self):
+    def __init__(self, scaling):
         super().__init__()
+        self.scaling = scaling
         self.title = 'Rank Everything'
         self.left = 100
         self.top = 100
-        self.width = 1600
-        self.height = 900
+        self.width = self.scaling.WINDOW_WIDTH
+        self.height = self.scaling.WINDOW_HEIGHT
 
         self._item_name_1 = None
         self._item_name_2 = None
@@ -81,12 +83,11 @@ class App(QWidget):
         # get categories and create checkboxes
         self.checkedCategories = [] # contains the current selected categories
         self.categories = sorted(self.comparator.get_all_lists())
-        for i in range(100):
-            self.categories.append(str(i+1))
         self.layoutCategoryCheckboxes = QVBoxLayout()
         self.checkboxCategories = self.categories.copy()
         for i, v in enumerate(self.categories):
             self.checkboxCategories[i] = QCheckBox(v, self)
+            self.checkboxCategories[i].setFixedHeight(self.scaling.SCALE_SIZE_30)
             self.layoutCategoryCheckboxes.addWidget(self.checkboxCategories[i])
 
         # add to layout
@@ -116,20 +117,20 @@ class App(QWidget):
         scrollCategory = QScrollArea()
         scrollCategory.setWidget(groupBoxCategory)
         scrollCategory.setWidgetResizable(True)
-        scrollCategory.setFixedHeight(800)
-        scrollCategory.setFixedWidth(300)
+        scrollCategory.setFixedHeight(self.scaling.FRAME_SIZE_800)
+        scrollCategory.setFixedWidth(self.scaling.FRAME_SIZE_300)
 
         scrollItem1 = QScrollArea()
         scrollItem1.setWidget(groupBoxItem1)
         scrollItem1.setWidgetResizable(True)
-        scrollItem1.setFixedHeight(800)
-        scrollItem1.setFixedWidth(600)
+        scrollItem1.setFixedHeight(self.scaling.FRAME_SIZE_800)
+        scrollItem1.setFixedWidth(self.scaling.FRAME_SIZE_700)
 
         scrollItem2 = QScrollArea()
         scrollItem2.setWidget(groupBoxItem2)
         scrollItem2.setWidgetResizable(True)
-        scrollItem2.setFixedHeight(800)
-        scrollItem2.setFixedWidth(600)
+        scrollItem2.setFixedHeight(self.scaling.FRAME_SIZE_800)
+        scrollItem2.setFixedWidth(self.scaling.FRAME_SIZE_700)
 
         #=====================================================================#
         # Create prefer buttons
@@ -235,7 +236,7 @@ class App(QWidget):
         # item name =================================================
         labelItemName = self.createLabelBold('Name')
         self._item_name_1 = self.createQTextEdit(item.get_name())
-        self._item_name_1.setFixedHeight(30)
+        self._item_name_1.setFixedHeight(self.scaling.SCALE_SIZE_30)
         b = QPushButton('Edit', self)
         b.clicked.connect(self.editName_1)
         
@@ -267,7 +268,7 @@ class App(QWidget):
         labelItemTags = self.createLabelBold('Tags')
         
         self._item_tags_1 = self.createQTextEdit(','.join(item.get_tags()))
-        self._item_tags_1.setFixedHeight(50)
+        self._item_tags_1.setFixedHeight(self.scaling.SCALE_SIZE_60)
         b = QPushButton('Edit', self)
         b.clicked.connect(self.editTags_1)
 
@@ -288,7 +289,7 @@ class App(QWidget):
         # item name =================================================
         labelItemName = self.createLabelBold('Name')
         self._item_name_2 = self.createQTextEdit(item.get_name())
-        self._item_name_2.setFixedHeight(30)
+        self._item_name_2.setFixedHeight(self.scaling.SCALE_SIZE_30)
         b = QPushButton('Edit', self)
         b.clicked.connect(self.editName_2)
         
@@ -319,7 +320,7 @@ class App(QWidget):
         # item tags =================================================
         labelItemTags = self.createLabelBold('Tags')
         self._item_tags_2 = self.createQTextEdit(','.join(item.get_tags()))
-        self._item_tags_2.setFixedHeight(50)
+        self._item_tags_2.setFixedHeight(self.scaling.SCALE_SIZE_60)
         b = QPushButton('Edit', self)
         b.clicked.connect(self.editTags_2)
         
@@ -352,12 +353,12 @@ class App(QWidget):
     def createLabelBold(self, name):
         label = QLabel(name, self)
         label.setFont(QFont("Times",weight=QFont.Bold))
-        label.setFixedHeight(30)
+        label.setFixedHeight(self.scaling.SCALE_SIZE_30)
         return label
 
     def createLabel(self, name):
         label = QLabel(name, self)
-        label.setFixedHeight(20)
+        label.setFixedHeight(self.scaling.SCALE_SIZE_30)
         return label
 
     def createQTextEdit(self, text):
@@ -415,8 +416,15 @@ class App(QWidget):
         self.on_click_success()
     
 if __name__ == '__main__':
+    scaling = Scaling()
+    multiplier = input('Enter scaling multiplier (1 for normal size): ')
+    scaling.scaleTo(float(multiplier))
+    
     app = QApplication(sys.argv)
-    instance = App()
+    new_font = app.font();
+    new_font.setPointSize(scaling.SCALE_SIZE_10);
+    app.setFont(new_font);
+    instance = App(scaling)
     app.exec_()
     print('Application closed')
 

@@ -14,13 +14,13 @@ class WindowUpdateThoughts(QWidget):
 
     def __init__(self, mainWindow):
         super().__init__()
+        self.mainWindow = mainWindow
         self.title = 'Update Thoughts'
         self.left = 100
         self.top = 100
-        self.width = 1600
-        self.height = 900
+        self.width = self.mainWindow.scaling.WINDOW_WIDTH
+        self.height = self.mainWindow.scaling.WINDOW_HEIGHT
         
-        self.mainWindow = mainWindow
         self.currentItem = None
         self.textEditNewThoughts = None
 
@@ -44,14 +44,14 @@ class WindowUpdateThoughts(QWidget):
         scrollLeftPane = QScrollArea()
         scrollLeftPane.setWidget(groupBoxLeftPane)
         scrollLeftPane.setWidgetResizable(True)
-        scrollLeftPane.setFixedHeight(800)
-        scrollLeftPane.setFixedWidth(700)
+        scrollLeftPane.setFixedHeight(self.mainWindow.scaling.FRAME_SIZE_800)
+        scrollLeftPane.setFixedWidth(self.mainWindow.scaling.FRAME_SIZE_700)
 
         scrollRightPane = QScrollArea()
         scrollRightPane.setWidget(groupBoxRightPane)
         scrollRightPane.setWidgetResizable(True)
-        scrollRightPane.setFixedHeight(800)
-        scrollRightPane.setFixedWidth(700)
+        scrollRightPane.setFixedHeight(self.mainWindow.scaling.FRAME_SIZE_800)
+        scrollRightPane.setFixedWidth(self.mainWindow.scaling.FRAME_SIZE_700)
 
         #=====================================================================#
         # Final layout
@@ -102,7 +102,7 @@ class WindowUpdateThoughts(QWidget):
         componentVLayout = QVBoxLayout()
 
         self.textEditNewThoughts = self.createQTextEdit('Add Thoughts Here.')
-        self.textEditNewThoughts.setFixedHeight(700)
+        self.textEditNewThoughts.setFixedHeight(self.mainWindow.scaling.FRAME_SIZE_600)
 
         # horizontal layout for buttons
         layoutButtons = QHBoxLayout()
@@ -129,12 +129,12 @@ class WindowUpdateThoughts(QWidget):
     def createLabelBold(self, name):
         label = QLabel(name, self)
         label.setFont(QFont("Times",weight=QFont.Bold))
-        label.setFixedHeight(30)
+        label.setFixedHeight(self.mainWindow.scaling.SCALE_SIZE_30)
         return label
 
     def createLabel(self, name):
         label = QLabel(name, self)
-        label.setFixedHeight(20)
+        label.setFixedHeight(self.mainWindow.scaling.SCALE_SIZE_30)
         return label
 
     def createQTextEdit(self, text):
