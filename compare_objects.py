@@ -68,178 +68,25 @@ class Item:
             self.comparator.update_item(self, l)
 
     
-
-        
         
 class Comparison:
     def __init__(self, line):
         self.better, self.worse, self.date = line
         
     def __contains__(self, item):
-        return item.item_id == self.better or item.item_id == self.worse
+        return item == self.better or item == self.worse
 
 
-class Comparator:
-    """ Object which picks items to compare from selected lists and can write comparisons """
-    
-    def __init__(self):
-        self.comp_file = os.getcwd() + '/comparisons/aaron_comparisons.csv'
-        self.thoughts_file = os.getcwd() + '/comparisons/aaron_thoughts.json'
+class ListManager:
+    def __init__(self, comp_dir='/comparisons/aaron_comparisons.csv', thoughts_dir='/comparisons/aaron_thoughts.json'):
+        self.list_ids = {}
+        self.comp_file = os.getcwd() + comp_dir
+        self.thoughts_file = os.getcwd() + thoughts_dir
         self.thoughts, self.comp_list = {}, []
         self.load_comps(self.comp_file)
         self.load_thoughts(self.thoughts_file)
-
-        self.items, self.list_names = [], []
-        self.list_ids = {}
-
-        self.item1, self.item2 = None, None
+        self.items = {}
         
-    """
-    COMPARISON FUNCTIONS
-    """
-
-    def shuffle_pair(self):
-        """ changes the pair of item objects associated with this object
-            such that they are from selected lists and have never been compared """
-        self.item1, self.item2 = choice(self.items), choice(self.items)
-        if self.item2 == self.item1:
-            self.shuffle_pair()
-        done = False
-        for comp in self.comp_list:
-            if self.item1 in comp and self.item2 in comp:
-                done = True
-        if done:
-            self.shuffle_pair()
-
-    def get_pair(self):
-        """ returns the pair of items associated with this object """
-        return self.item1, self.item2
-
-    def select_preferred(self, item_num):
-        """ selects the preferred item_num (1 or 2) and adds the comparison to the list """
-        if item_num == 1:
-            self.add_comparison(self.item1, self.item2)
-        else:
-            self.add_comparison(self.item2, self.item1)
-
-    """
-    LIST MANAGEMENT
-    """
-        
-    def get_all_lists(self):
-        """ returns a list of the names of all categories """
-        l = []
-        for _, _, files in os.walk(os.getcwd() + "/lists/"):
-            for file in files:
-                if file.endswith('.csv') and file != "list_ids.csv":
-                    l.append(file[:-4])
-        return l
-
-    def get_active_lists(self):
-        """ returns a list of active lists from which items can be selected """
-        return self.list_names
-
-    def set_lists(self, names):
-        """ sets active lists to the lists in names """
-        removals = sum([1 for name in self.list_names if name not in names])
-        if removals >= len(self.list_names) / 2:
-            self.list_names, self.items = [], []
-            self.item1, self.item2 = None, None
-            for name in names:
-                self.add_list(name)
-        else:
-            for name in self.list_names:
-                if name not in names:
-                    self.remove_list(name)
-            for name in names:
-                self.add_list(name)
-
-    """
-    INTERNAL FUNCTIONS
-    Not for Josh to see/understand
-    """
-
-    def add_list(self, list_name):
-        """ adds lists to potential choices """
-        if list_name not in self.list_names:
-            self.list_names.append(list_name)
-            path = self.get_path(list_name)
-            with open(path, mode='r') as file:
-                # reading the CSV file
-                csvFile = csv.reader(file)
-                for line in list(csvFile)[1:]:
-                    if line and line[0]:
-                        thought = self.thoughts.get(line[0])
-                        if not thought:
-                            thought = {}
-                        self.items.append(Item(line, thought, comparator=self))
-
-    def remove_list(self, list_name):
-        """ removes the list from being selected """
-        if list_name in self.list_names:
-            list_id = self.get_list_id(list_name)
-            self.list_names.remove(list_name)
-            for i in range(len(self.items) - 1, -1, -1):
-                item = self.items[i]
-                if item.item_id[:4] == list_id:
-                    self.items.remove(item)
-
-    def add_comparison(self, better, worse):
-        """ adds a new comparison """
-        l = [better.item_id, worse.item_id, time()]
-        with open(self.comp_file, 'a', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(l)
-        self.comp_list.append(Comparison(l))
-
-    def update_item(self, item, new_line):
-        """ updates the item in the CSV """
-        new_rows = []
-        list_dir = self.get_path(self.get_list_name(item.get_item_id()[:4]))
-        with open(list_dir, 'r') as f:
-            reader = csv.reader(f)  # pass the file to our csv reader
-            for row in reader:  # iterate over the rows in the file
-                if row and row[0] == item.get_item_id():
-                    row = new_line
-                new_rows.append(row)  # add the modified rows
-
-        with open(list_dir, 'w', newline='') as f:
-            # Overwrite the old file with the modified rows
-            writer = csv.writer(f)
-            writer.writerows(new_rows)
-
-    def load_comps(self, filename):
-        with open(filename, mode='r') as file:
-            # reading the CSV file
-            csvFile = csv.reader(file)
-            for line in list(csvFile)[1:]:
-                if line:
-                    self.comp_list.append(Comparison(line))
-
-    def load_thoughts(self, filename):
-        with open(filename, mode='r') as f:
-            try:
-                self.thoughts = json.load(f)
-            except JSONDecodeError:
-                pass
-
-    def update_item_thoughts(self, item_id, thought):
-        if item_id in self.thoughts:
-            previous_thoughts = {item_id: self.thoughts[item_id]}
-        else:
-            previous_thoughts = {item_id: {}}
-        previous_thoughts.update({item_id: thought})
-        a_dict = previous_thoughts
-        self.thoughts.update(a_dict)
-
-        with open(self.thoughts_file) as f:
-            data = json.load(f)
-
-        data.update(a_dict)
-
-        with open(self.thoughts_file, 'w') as f:
-            json.dump(data, f)
-                    
     def get_path(self, list_name):
         for subdir, _, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
@@ -273,3 +120,173 @@ class Comparator:
             if id == value:
                 return key
 
+    def get_item(self, item_id):
+        if item_id in self.items:
+            return self.items[item_id]
+        list_name = self.get_list_name(item_id[:4])
+        with open(self.get_path(list_name), mode='r') as file:
+            # reading the CSV file
+            csvFile = csv.reader(file)
+            for line in list(csvFile)[1:]:
+                if line and line[0]:
+                    thought = self.thoughts.get(line[0])
+                    if not thought:
+                        thought = {}
+                    temp = Item(line, thought, comparator=self)
+                    self.items[temp.item_id] = temp
+        return self.items[item_id]
+
+    def update_item(self, item, new_line):
+        """ updates the item in the CSV """
+        new_rows = []
+        list_dir = self.get_path(self.get_list_name(item.get_item_id()[:4]))
+        with open(list_dir, 'r') as f:
+            reader = csv.reader(f)  # pass the file to our csv reader
+            for row in reader:  # iterate over the rows in the file
+                if row and row[0] == item.get_item_id():
+                    row = new_line
+                new_rows.append(row)  # add the modified rows
+
+        with open(list_dir, 'w', newline='') as f:
+            # Overwrite the old file with the modified rows
+            writer = csv.writer(f)
+            writer.writerows(new_rows)
+
+    def get_all_lists(self):
+        """ returns a list of the names of all categories """
+        l = []
+        for _, _, files in os.walk(os.getcwd() + "/lists/"):
+            for file in files:
+                if file.endswith('.csv') and file != "list_ids.csv":
+                    l.append(file[:-4])
+        return l
+
+    def load_comps(self, filename):
+        with open(filename, mode='r') as file:
+            # reading the CSV file
+            csvFile = csv.reader(file)
+            for line in list(csvFile)[1:]:
+                if line:
+                    self.comp_list.append(Comparison(line))
+
+    def load_thoughts(self, filename):
+        with open(filename, mode='r') as f:
+            try:
+                self.thoughts = json.load(f)
+            except JSONDecodeError:
+                pass
+
+    def update_item_thoughts(self, item_id, thought):
+        if item_id in self.thoughts:
+            previous_thoughts = {item_id: self.thoughts[item_id]}
+        else:
+            previous_thoughts = {item_id: {}}
+        previous_thoughts.update({item_id: thought})
+        a_dict = previous_thoughts
+        self.thoughts.update(a_dict)
+
+        with open(self.thoughts_file) as f:
+            data = json.load(f)
+
+        data.update(a_dict)
+
+        with open(self.thoughts_file, 'w') as f:
+            json.dump(data, f)
+
+
+class Comparator(ListManager):
+    """ Object which picks items to compare from selected lists and can write comparisons """
+    
+    def __init__(self, comp_dir='/comparisons/aaron_comparisons.csv', thoughts_dir='/comparisons/aaron_thoughts.json'):
+        super().__init__(comp_dir=comp_dir, thoughts_dir=thoughts_dir)
+        self.active_lists, self.active_items = [], []
+        self.item1, self.item2 = None, None
+        
+    """
+    COMPARISON FUNCTIONS
+    """
+
+    def shuffle_pair(self):
+        """ changes the pair of item objects associated with this object
+            such that they are from selected lists and have never been compared """
+        self.item1, self.item2 = self.get_item(choice(self.active_items)), self.get_item(choice(self.active_items))
+        if self.item2 == self.item1:
+            self.shuffle_pair()
+        done = False
+        for comp in self.comp_list:
+            if self.item1 in comp and self.item2 in comp:
+                done = True
+        if done:
+            self.shuffle_pair()
+
+    def get_pair(self):
+        """ returns the pair of items associated with this object """
+        return self.item1, self.item2
+
+    def select_preferred(self, item_num):
+        """ selects the preferred item_num (1 or 2) and adds the comparison to the list """
+        if item_num == 1:
+            self.add_comparison(self.item1, self.item2)
+        else:
+            self.add_comparison(self.item2, self.item1)
+
+    """
+    LIST MANAGEMENT
+    """
+
+    def get_active_lists(self):
+        """ returns a list of active lists from which items can be selected """
+        return self.active_lists
+
+    def set_lists(self, names):
+        """ sets active lists to the lists in names """
+        removals = sum([1 for name in self.active_lists if name not in names])
+        if removals >= len(self.active_lists) / 2:
+            self.active_lists, self.active_items = [], []
+            self.item1, self.item2 = None, None
+            for name in names:
+                self.add_list(name)
+        else:
+            for name in self.active_lists:
+                if name not in names:
+                    self.remove_list(name)
+            for name in names:
+                self.add_list(name)
+
+    """
+    INTERNAL FUNCTIONS
+    Not for Josh to see/understand
+    """
+
+    def add_list(self, list_name):
+        """ adds lists to potential choices """
+        if list_name not in self.active_lists:
+            self.active_lists.append(list_name)
+            path = self.get_path(list_name)
+            with open(path, mode='r') as file:
+                # reading the CSV file
+                csvFile = csv.reader(file)
+                for line in list(csvFile)[1:]:
+                    if line and line[0]:
+                        self.active_items.append(line[0])
+
+    def remove_list(self, list_name):
+        """ removes the list from being selected """
+        if list_name in self.active_lists:
+            list_id = self.get_list_id(list_name)
+            self.active_lists.remove(list_name)
+            for i in range(len(self.active_items) - 1, -1, -1):
+                item = self.active_items[i]
+                if item[:4] == list_id:
+                    self.active_items.remove(item)
+
+    def add_comparison(self, better, worse):
+        """ adds a new comparison """
+        l = [better.item_id, worse.item_id, time()]
+        with open(self.comp_file, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(l)
+        self.comp_list.append(Comparison(l))
+
+    
+                    

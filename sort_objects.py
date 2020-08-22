@@ -1,4 +1,6 @@
 from collections import deque
+from compare_objects import ListManager
+
 def sort_objects(comps):
     '''
     Returns a sorting of objects from best to worst.
@@ -55,3 +57,10 @@ def visit(fwd_graph, v, rev_postorder, visited):
     for v2 in fwd_graph[v]:
         visit(fwd_graph, v2, rev_postorder, visited)
     rev_postorder.append(v)
+
+
+a = ListManager()
+comparisons = [(x.better, x.worse) for x in a.comp_list]
+ranked = sort_objects(comparisons)
+final_ranking = [a.get_item(x) for x in ranked]
+print([x.name for x in final_ranking])
