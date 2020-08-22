@@ -36,7 +36,7 @@ class Item:
         """ get the user's thoughts about this item """
         formatted_thoughts = ""
         for key, value in self.thoughts.items():
-            formatted_thoughts += ctime(key) + ": " + value + 2 * os.linesep
+            formatted_thoughts += ctime(float(key)) + ": " + value + 2 * os.linesep
         return formatted_thoughts
         
     """
