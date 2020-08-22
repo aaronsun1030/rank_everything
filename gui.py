@@ -9,6 +9,7 @@ import csv
 
 from utils import *
 from compare_objects import *
+from update_thoughts import *
 
 def e():
     sys.exit()
@@ -33,6 +34,7 @@ class App(QWidget):
         self._item_thoughts_2 = None
         self.item1, self.item2 = None, None
 
+        self.windowUpdateThoughts = WindowUpdateThoughts(self)
         self.comparator = Comparator()
         
         self.initUI()
@@ -201,11 +203,13 @@ class App(QWidget):
                 self.layoutCategoriesSelected.addWidget(_labelName)
 
     def beginRating(self):
+        # clear layout and rebuild
+        self.clearLayout(self.layoutItem1)
+        self.clearLayout(self.layoutItem2)
+
         print('begin rating with selected categories:')
         if self.checkedCategories == []:
             print('no categories selected')
-            self.clearLayout(self.layoutItem1)
-            self.clearLayout(self.layoutItem2)
             return
         print(self.checkedCategories)
 
@@ -223,6 +227,8 @@ class App(QWidget):
         self.renderItemLayout2(self.item2, self.layoutItem2)
 
     def renderItemLayout1(self, item, layout):
+        self.clearLayout(self.layoutItem1)
+
         # item id =================================================
         labelItemId = self.createLabelBold('ID')
         label_item_id = self.createLabel(item.get_item_id())
@@ -254,7 +260,7 @@ class App(QWidget):
         # item thoughts =================================================
         labelItemThoughts = self.createLabelBold('Thoughts')
         self._item_thoughts_1 = self.createQTextEdit(item.get_thoughts())
-        b = QPushButton('Edit', self)
+        b = QPushButton('Add Thoughts', self)
         b.clicked.connect(self.editThoughts_1)
 
         layout.addWidget(labelItemThoughts)
@@ -274,6 +280,8 @@ class App(QWidget):
         layout.addWidget(b)
 
     def renderItemLayout2(self, item, layout):
+        self.clearLayout(self.layoutItem2)
+
         # item id =================================================
         labelItemId = self.createLabelBold('ID')
         label_item_id = self.createLabel(item.get_item_id())
@@ -305,7 +313,7 @@ class App(QWidget):
         # item thoughts =================================================
         labelItemThoughts = self.createLabelBold('Thoughts')
         self._item_thoughts_2 = self.createQTextEdit(item.get_thoughts())
-        b = QPushButton('Edit', self)
+        b = QPushButton('Add Thoughts', self)
         b.clicked.connect(self.editThoughts_2)
         
         layout.addWidget(labelItemThoughts)
@@ -389,14 +397,16 @@ class App(QWidget):
         self.on_click_success()
     
     def editThoughts_1(self):
-        print('editing thoughts 1')
-        self.item1.update_thoughts(self._item_thoughts_1.toPlainText())
-        self.on_click_success()
+        print('adding to thoughts 1')
+        self.windowUpdateThoughts.renderWindow(1)
+        self.windowUpdateThoughts.show()
+        self.hide()
     
     def editThoughts_2(self):
-        print('editing thoughts 2')
-        self.item2.update_thoughts(self._item_thoughts_2.toPlainText())
-        self.on_click_success()
+        print('adding to thoughts 2')
+        self.windowUpdateThoughts.renderWindow(2)
+        self.windowUpdateThoughts.show()
+        self.hide()
     
     def editTags_1(self):
         print('editing tags 1')
