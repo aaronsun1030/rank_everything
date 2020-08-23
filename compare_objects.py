@@ -78,6 +78,7 @@ class Comparison:
 
 
 class ListManager:
+
     def __init__(self, comp_dir='/comparisons/aaron_comparisons.csv', thoughts_dir='/comparisons/aaron_thoughts.json'):
         self.list_ids = {}
         self.comp_file = os.getcwd() + comp_dir
@@ -87,7 +88,12 @@ class ListManager:
         self.load_thoughts(self.thoughts_file)
         self.items = {}
         
+
+    """
+    Fetch list/item details
+    """
     def get_path(self, list_name):
+        ''' get directory for list from list name '''
         for subdir, _, files in os.walk(os.getcwd() + "/lists/"):
             for file in files:
                 filepath = subdir + os.sep + file
@@ -95,6 +101,7 @@ class ListManager:
                     return filepath
                     
     def get_list_id(self, list_name):
+        ''' get list ID from list name '''
         if not self.list_ids:
             with open('lists/list_ids.csv', mode='r') as file:
                 # reading the CSV file 
@@ -107,6 +114,7 @@ class ListManager:
         return self.list_ids[list_name]
 
     def get_list_name(self, id):
+        ''' get list name from list ID '''
         if not self.list_ids:
             with open('lists/list_ids.csv', mode='r') as file:
                 # reading the CSV file
@@ -121,6 +129,7 @@ class ListManager:
                 return key
 
     def get_item(self, item_id):
+        ''' get item from item ID '''
         if item_id in self.items:
             return self.items[item_id]
         list_name = self.get_list_name(item_id[:4])
@@ -136,6 +145,18 @@ class ListManager:
                     self.items[temp.item_id] = temp
         return self.items[item_id]
 
+    def get_all_lists(self):
+        ''' returns a list of the names of all categories '''
+        l = []
+        for _, _, files in os.walk(os.getcwd() + "/lists/"):
+            for file in files:
+                if file.endswith('.csv') and file != "list_ids.csv":
+                    l.append(file[:-4])
+        return l
+
+    """
+    Update item
+    """
     def update_item(self, item, new_line):
         """ updates the item in the CSV """
         new_rows = []
@@ -152,31 +173,8 @@ class ListManager:
             writer = csv.writer(f)
             writer.writerows(new_rows)
 
-    def get_all_lists(self):
-        """ returns a list of the names of all categories """
-        l = []
-        for _, _, files in os.walk(os.getcwd() + "/lists/"):
-            for file in files:
-                if file.endswith('.csv') and file != "list_ids.csv":
-                    l.append(file[:-4])
-        return l
-
-    def load_comps(self, filename):
-        with open(filename, mode='r') as file:
-            # reading the CSV file
-            csvFile = csv.reader(file)
-            for line in list(csvFile)[1:]:
-                if line:
-                    self.comp_list.append(Comparison(line))
-
-    def load_thoughts(self, filename):
-        with open(filename, mode='r') as f:
-            try:
-                self.thoughts = json.load(f)
-            except JSONDecodeError:
-                pass
-
     def update_item_thoughts(self, item_id, thought):
+        ''' changes the thought of item_id to thought '''
         if item_id in self.thoughts:
             previous_thoughts = {item_id: self.thoughts[item_id]}
         else:
@@ -192,6 +190,35 @@ class ListManager:
 
         with open(self.thoughts_file, 'w') as f:
             json.dump(data, f)
+
+
+    """
+    Load in files
+    """
+    def change_comp_file(self, comp_dir):
+        self.comp_file = comp_dir
+        self.comp_list = []
+        self.load_comps(comp_dir)
+
+    def change_thoughts_file(self, thoughts_dir):
+        self.thoughts_file = thoughts_dir
+        self.thoughts = {}
+        self.load_thoughts(thoughts_dir)
+
+    def load_comps(self, filename):
+        with open(filename, mode='r') as file:
+            # reading the CSV file
+            csvFile = csv.reader(file)
+            for line in list(csvFile)[1:]:
+                if line:
+                    self.comp_list.append(Comparison(line))
+
+    def load_thoughts(self, filename):
+        with open(filename, mode='r') as f:
+            try:
+                self.thoughts = json.load(f)
+            except JSONDecodeError:
+                pass
 
 
 class Comparator(ListManager):

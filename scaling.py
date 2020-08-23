@@ -20,5 +20,5 @@ class Scaling:
         self.FRAME_SIZE_300 = int(self.FRAME_SIZE_300 * multiplier)
         self.SCALE_SIZE_60 = int(self.SCALE_SIZE_60 * multiplier)
         self.SCALE_SIZE_30 = int(self.SCALE_SIZE_30 * multiplier)
-        self.SCALE_SIZE_10 = int(self.SCALE_SIZE_10 * multiplier)
+        self.SCALE_SIZE_10 = int(self.SCALE_SIZE_10 * multiplier / 2)
 
