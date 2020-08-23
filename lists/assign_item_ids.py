@@ -5,7 +5,7 @@ import shutil
 
 list_ids = {}
 
-with open('list_ids.csv', mode='r') as file:
+with open('lists/list_ids.csv', mode='r') as file:
     # reading the CSV file
     csvFile = csv.reader(file)
 
@@ -26,7 +26,7 @@ def get_max_id(filepath):
     return m
 
 
-for subdir, dirs, files in os.walk(os.getcwd()):
+for subdir, dirs, files in os.walk(os.getcwd() + "/lists/"):
     for file in files:
         if subdir.endswith("satisfactory"):
             filepath = subdir + os.sep + file
