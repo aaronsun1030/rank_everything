@@ -1,5 +1,6 @@
 from collections import deque
 from compare_objects import ListManager
+from math import pow
 
 def sort_objects(comps):
     '''
@@ -58,9 +59,49 @@ def visit(fwd_graph, v, rev_postorder, visited):
         visit(fwd_graph, v2, rev_postorder, visited)
     rev_postorder.append(v)
 
-
-a = ListManager()
+'''a = ListManager()
 comparisons = [(x.better, x.worse) for x in a.comp_list]
 ranked = sort_objects(comparisons)
 final_ranking = [a.get_item(x) for x in ranked]
-print([x.name for x in final_ranking])
+print([x.name for x in final_ranking])'''
+
+def find_elos(comps):
+    elos = {}
+    for (item1, item2) in comps:
+        if item1 not in elos:
+            elos[item1] = (1000, 0)
+        if item2 not in elos:
+            elos[item2] = (1000, 0)
+
+    def Probability(rating1, rating2): 
+        return 1.0 * 1.0 / (1 + 1.0 * pow(10, 1.0 * (rating1 - rating2) / 400)) 
+
+    def EloRating(item1, item2): 
+        def K_factor(item):
+            if elos[item][1] <= 30:
+                return 40
+            elif elos[item][0] >= 2400:
+                return 10
+            else:
+                return 20
+
+        K1, K2 = K_factor(item1), K_factor(item2) 
+
+        Pb = Probability(elos[item1][0], elos[item2][0]) 
+        Pa = Probability(elos[item2][0], elos[item1][0]) 
+    
+        elos[item1] = (elos[item1][0] + K1 * (1 - Pa), elos[item1][1] + 1)
+        elos[item2] = (elos[item2][0] + K2 * (0 - Pb), elos[item2][1] + 1)
+
+    for (winner, loser) in comps:
+        EloRating(winner, loser)
+
+    return elos
+        
+a = ListManager()
+comparisons = [(x.better, x.worse) for x in a.comp_list]
+elos = find_elos(comparisons)
+final_elos = {}
+for item in elos:
+    final_elos[a.get_item(item)] = elos[item]
+print({k.get_name(): v for k, v in sorted(final_elos.items(), key=lambda item: item[1])})
