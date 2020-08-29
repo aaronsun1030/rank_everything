@@ -2,7 +2,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x02001,1st Amendment of the US Constitution,"Freedom of speech, press, assembly, religion, petition",US Constitution,US Government,Politics
 0x02002,freedom of speech,Say what you want,Civil Liberty,US Government,Politics
 0x02003,freedom of press,Print what you want,Civil Liberty,US Government,Politics
-0x02004,freedom of assembly,Gather when you want,Civil Liberty,US Government,Politics
+0x02004,Freedom of Assembly,Gather when you want,Civil Liberty,US Government,Politics
 0x02005,freedom of religion,Worship what you want,Civil Liberty,US Government,Politics
 0x02006,freedom of petition,Write petitions about whatever you want,Civil Liberty,US Government,Politics
 0x02007,2nd Amendment of the US Constitution,Right to bear arms,US Constitution,US Government,Politics
@@ -13,13 +13,13 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0200c,eminiment domain,government can take private property,Civil Liberty,US Government,Politics
 0x0200d,double jeopardy,can't be charged twice,Civil Liberty,US Government,Politics
 0x0200e,self incrimination,can't use self incriminating testimony,Civil Liberty,US Government,Politics
-0x0200f,miranda rights,"1. You are under arrest and what you are charged with 2. Right to remain silent, anything you say can be used against you 3. You have right to attorney, if you can't afford one, one will be appointed to you",Civil Liberty,US Government,Politics
+0x0200f,Miranda Rights,"1. You are under arrest and what you are charged with 2. Right to remain silent, anything you say can be used against you 3. You have right to attorney, if you can't afford one, one will be appointed to you",Civil Liberty,US Government,Politics
 0x02010,6th Amendment of the US Constitution,fair and speedy trial,US Constitution,US Government,Politics
 0x02011,7th Amendment of the US Constitution,trial by jury,US Constitution,US Government,Politics
 0x02012,8th Amendment of the US Constitution,cruel and unusual punishment,US Constitution,US Government,Politics
 0x02013,9th Amendment of the US Constitution,protects rights not in bill,US Constitution,US Government,Politics
 0x02014,10th Amendment of the US Constitution,power not in constitution given to states,US Constitution,US Government,Politics
-0x02015,federalism,a mixed or compound mode of government that combines a general government with regional governments in a single political system,,US Government,Politics
+0x02015,Federalism,A mixed or compound mode of government that combines a general government with regional governments in a single political system.,,US Government,Politics
 0x02016,11th Amendment of the US Constitution,can't sue states,US Constitution,US Government,Politics
 0x02017,12th Amendment of the US Constitution,P and VP run together,US Constitution,US Government,Politics
 0x02018,13th Amendment of the US Constitution,no slavery,US Constitution,US Government,Politics
@@ -27,7 +27,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0201a,15th Amendment of the US Constitution,vote can't be denied by race,US Constitution,US Government,Politics
 0x0201b,16th Amendment of the US Constitution,Congress makes income tax,US Constitution,US Government,Politics
 0x0201c,17th Amendment of the US Constitution,Senate elected by vote,US Constitution,US Government,Politics
-0x0201d,18th Amendment of the US Constitution,prohibition,US Constitution,US Government,Politics
+0x0201d,18th Amendment of the US Constitution,Prohibition,US Constitution,US Government,Politics
 0x0201e,19th Amendment of the US Constitution,women's suffrage,US Constitution,US Government,Politics
 0x0201f,20th Amendment of the US Constitution,shortens lame duck president,US Constitution,US Government,Politics
 0x02020,21st Amendment of the US Constitution,ends prohibition,US Constitution,US Government,Politics
@@ -58,7 +58,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x02039,District of Columbia v. Heller,Firearm cannot be regulated,US Court Case,US Government,Politics
 0x0203a,McDonald v. Chicago,Applied 2nd Amendment to states through 14th Amendment,US Court Case,US Government,Politics
 0x0203b,Mapp v. Ohio,Exclusionary Rule applies to states through 14th Amendment,US Court Case,US Government,Politics
-0x0203c,Weeks v. United States,Developed Exclusionary Rule(illegal evidence can't be used for a criminal trial),US Court Case,US Government,Politics
+0x0203c,Weeks v. United States,Developed Exclusionary Rule (illegal evidence can't be used for a criminal trial),US Court Case,US Government,Politics
 0x0203d,Katz v. United States,Warrant is needed if a reasonable person would believe they have privacy,US Court Case,US Government,Politics
 0x0203e,Terry v. Ohio,Reasonable person thinks you are suspicious police can Stop and Frisk,US Court Case,US Government,Politics
 0x0203f,Barron v. Baltimore,Bill of Rights cannot bbe applied to states(until 14th Amendment),US Court Case,US Government,Politics
@@ -91,7 +91,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0205a,Federal Election Campaign Act (FECA) of 1972,Place limits on campaign contributions,US Legislation,US Government,Politics
 0x0205b,Americans with Disabilities Act of 1990,prohibits discrimination against disabled people,US Legislation,US Government,Politics
 0x0205c,Motor Voter Act of 1993,require states to give voter registration opportunities,US Legislation,US Government,Politics
-0x0205d,Communications Decency Act of 1996,regulate pornographic material on the internet,US Legislation,US Government,Politics
+0x0205d,Communications Decency Act of 1996,Regulate pornographic material on the internet,US Legislation,US Government,Politics
 0x0205e,Welfare Reform Act of 1996,created TANF help needy families,US Legislation,US Government,Politics
 0x0205f,Bi-Partisan Campaign Finance Reform Act of 2002,Stopped soft money and prevented ads that name a candidate within 30 days of a primary,US Legislation,US Government,Politics
 0x02060,Patient Protection and Affordable Care Act of 2010,"Obamacare, increased affordability and quality of health insurance",US Legislation,US Government,Politics
