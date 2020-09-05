@@ -48,10 +48,10 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0202f,Gitlow v. New York,"1st Amendment incorporated, states can't infringe speech and press",US Court Case,US Government,Politics
 0x02030,Virginia v. Loving,"Equal Protection, can't make laws prohibiting interracial marriage",US Court Case,US Government,Politics
 0x02031,Tinker v. Des Moines School District,School can regulate symbolic speech if it interferes with school operation,US Court Case,US Government,Politics
-0x02032,Miller v. California,"Miller test(obscenity): 1. Depicts sexual conduct in offensive way? 2. lacks serious literary, artisitc, political, scientific purpose?",US Court Case,US Government,Politics
+0x02032,Miller v. California,"Miller test (obscenity): 1. Depicts sexual conduct in offensive way? 2. lacks serious literary, artisitc, political, scientific purpose?",US Court Case,US Government,Politics
 0x02033,Buckley v. Valeo,struck down FECA,US Court Case,US Government,Politics
 0x02034,Texas v. Johnson,flag burning is protected by freedom of speech,US Court Case,US Government,Politics
-0x02035,Near v. Minnesota,No prior restraint,US Court Case,US Government,Politics
+0x02035,Near v. Minnesota,No prior restraint: censorship based on grounds that content is libelous or harmful.,US Court Case,US Government,Politics
 0x02036,New York Times v. Sullivan,Can't sue for libel without actual malice(knew story was false or showed disregard for truth),US Court Case,US Government,Politics
 0x02037,New York Times v. United States (Pentagon Papers Case),National security is too vague to justify prior restraint,US Court Case,US Government,Politics
 0x02038,Hazelwood School District v. Kuhlmeier,School can regulate school newspaper because school has right to limit info to students,US Court Case,US Government,Politics
@@ -75,7 +75,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0204a,Regents of UC v. Bakke,No racial quota,US Court Case,US Government,Politics
 0x0204b,Gratz v. Bollinger and Grutter v. Bollinger,University consideration must use specific and individual assessment and cannot use race as a primary deciding factor,US Court Case,US Government,Politics
 0x0204c,Citizens United v. FEC,First Amendment prevents restriction on independent political expenditures by a nonprofit corporation,US Court Case,US Government,Politics
-0x0204d,Baker v. Carr,federal courts can decide redistricting cases,US Court Case,US Government,Politics
+0x0204d,Baker v. Carr,Federal courts can decide redistricting cases,US Court Case,US Government,Politics
 0x0204e,Pendleton Civil Service Act of 1883,Government jobs awarded based on merit,US Legislation,US Government,Politics
 0x0204f,Hatch Act,employees in executive branch cannot engage in political activity,US Legislation,US Government,Politics
 0x02050,Social Security Act of 1935,Established social security,US Legislation,US Government,Politics
