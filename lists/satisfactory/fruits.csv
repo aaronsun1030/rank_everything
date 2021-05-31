@@ -26,7 +26,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x0b019,Japanese plum,It's a fruit.,Fruit,Food,
 0x0b01a,Kiwi,It's a fruit.,Fruit,Food,
 0x0b01b,Kumquat,It's a fruit.,Fruit,Food,
-0x0b01c,Lemon,It's a fruit.,Fruit,Food,
+0x0b01c,Lemon,"It's a sour, yellow fruit.",Fruit,Food,
 0x0b01d,Lime,It's a fruit.,Fruit,Food,
 0x0b01e,Lychee,It's a fruit.,Fruit,Food,
 0x0b01f,Mango,It's a fruit.,Fruit,Food,

@@ -148,7 +148,7 @@ class ListManager:
     def get_all_lists(self):
         ''' returns a list of the names of all categories '''
         l = []
-        for _, _, files in os.walk(os.getcwd() + "/lists/"):
+        for _, _, files in os.walk(os.getcwd() + "/lists/satisfactory/"):
             for file in files:
                 if file.endswith('.csv') and file != "list_ids.csv":
                     l.append(file[:-4])

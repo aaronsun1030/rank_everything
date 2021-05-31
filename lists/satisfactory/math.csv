@@ -25,7 +25,7 @@ Item ID,Name,Description,Tag 1,Tag 2,Tag 3
 0x07018,Closed sets,every limit point is in the set,Mathematics,Real Analysis,
 0x07019,Limit point,for every delta>0 there is another point in the set nearby,Mathematics,Real Analysis,
 0x0701a,Clopen sets,Both open and closed ,Mathematics,Real Analysis,
-0x0701b,compactness (sets): covering definition,every open covering has a finite subcovering,Mathematics,Real Analysis,
+0x0701b,Compactness (Sets): Covering Definition,every open covering has a finite subcovering,Mathematics,Real Analysis,
 0x0701c,sequential compactness (sets),all sequences converge inside the set,Mathematics,Real Analysis,
 0x0701d,Heine-Borel theorem,compact sets in R iff closed and bounded,Mathematics,Real Analysis,
 0x0701e,connectedness (sets),set is not disconnected,Mathematics,Real Analysis,
