@@ -7,7 +7,7 @@ Jinja2==2.11.2
 MarkupSafe==2.0.1
 pip==21.1.1
 pyparsing==2.4.7
-setuptools==52.0.0.post20210125
+setuptools==52.0.0
 Werkzeug==1.0.1
 wheel==0.36.2
 wincertstore==0.2
