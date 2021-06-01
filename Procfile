@@ -1,1 +1,1 @@
-web: app.gunicorn simple_bot_web
+web: gunicorn app.simple_bot_web
