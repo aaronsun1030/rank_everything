@@ -2,6 +2,16 @@
 """Example bot that returns a synchronous response."""
 
 from flask import Flask, request, json
+from httplib2 import Http
+from oauth2client.service_account import ServiceAccountCredentials
+from apiclient.discovery import build
+
+scopes = 'https://www.googleapis.com/auth/chat.bot'
+credentials = ServiceAccountCredentials.from_json_keyfile_name(
+    'bot_info/ranking-bot-315505-c5befdb30556.json', scopes)
+
+chat_service = build('chat', 'v1', http=credentials.authorize(Http()))
+
 
 
 app = Flask(__name__)
@@ -17,7 +27,7 @@ def on_event():
     text = 'You said: `%s`' % event['message']['text']
   else:
     return
-  return json.jsonify({'text': text})
+  return json.jsonify({'text': str(event)}) # json.jsonify({'text': text})
 
 
 if __name__ == '__main__':
