@@ -2,8 +2,15 @@ brotlipy==0.7.0
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
+click==7.1.2
 cryptography==3.4.7
+Flask==1.1.2
+gunicorn==19.9.0
+httplib2==0.19.1
 idna==2.10
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==2.0.1
 pip==21.1.1
 pycosat==0.6.3
 pycparser==2.20
@@ -14,5 +21,6 @@ setuptools==52.0.0
 six==1.15.0
 tqdm==4.59.0
 urllib3==1.26.4
+Werkzeug==1.0.1
 wheel==0.36.2
 wincertstore==0.2
