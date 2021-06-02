@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ranking-bot-315505",
+  "private_key_id": "c5befdb3055636df01202916c6a3b61e97d4be3f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDP96IWUW+0iLRy\nMCD8lqCDIRiWH92MPBz02JSWZ7u0g36pvWju7wYSxMCA7Id3IeZGoB/+94CFhtay\nhNYBYqkneig3K5IT/Qfc2yhG5ZHsvY8kKc0xQ+jsZY6xtGCHsYOP6wn1jDV81cBB\nzEPyGhrw+jCH3LMxKQ3ypZAD//ttP9o4goXHvwReAOa2ZWk6AH72Eb4kZOOMhrDq\ncv1oTpOsYkjlf8TEpyXwwgcUJqKFOBbiJcQuHRrBcfvvTe54tEY9zY35dN41xljM\n6WzilfySipKxFKwwEDthsVp+VdDWxu7m8rUfJKAvlSt7w9fI37//0v3qDgxUoXll\npb0qk9XzAgMBAAECggEAAYo5vJy1J3eN1VSgUPaoYBEj24kd6LYcu1PrHQtfncCL\nKXTR3Jijvg86a+zLqk/c+pG0rSSowew0Vwoqeb86pCb3xtC6VnfY4i9l7OJGASlP\nT+hFGR9/PzqGCG8qJyezW4cJwePSKSQeckhSc3+OXEeaYd1IAPOgvtdziP3t/muw\nSrCIi86raFr9RcABm2R8xkEfQtKSlY68hMxjIuLYTilc7+aBWYqujha8bftaCDxc\nXknbztL+JGWn2KQr4wymy9YHhUYaXbH73AmDlvW4a2Qs7O2gq2kHZKNNXrMU7f7j\nOloMocW36rFFGxSixzp2XFThFf1Qk6QqrnC55E3MzQKBgQDm3rpawN77esfodsZr\n7ZJvsZjpAdgn8fu9TBrTv7qvXqSn4M98QCu8OkTbltRZEPZtZu988+7TrtDNDe6F\n/yIBNkFoX9iOuboIrh3s5qSXAwgB9wzZrECrWQGh/0TzJC5usSYGyyVrO6V34OXF\nGIfJsm0fYsWPtkzJ1UfeEZkLlwKBgQDmmraZY8Aujmmc/C714O9+olFL05DGUCcg\nUif5ojH7OMSi7rvMWSq6X+YTYz8ndcwZIR+Qf4//CnYbonAT2HwrS73zFlTDG9qW\nigGaSUtt6+AMr+RBfhbp0mXvc4GpmjgSvcFChcBOP6wZON+ltRqjsBGUwSFzfiMX\n+RvP+uHEBQKBgAEex4y1Lt/NgrbQDLptVq6QEAvhZGkdNXl/qwmn/oHnVaky4A7c\nSNoK9laSbslX2bpCK5tRm7EPQhgcnzGrQUD8QGj/Pg/DOvHb1m1V2SqaaymHR1qv\nCUlLj0R39p+vZ0JGPcb+qVnR2kWwo6zHJ7GE2h6y3f6KhejczhJ3x2RVAoGAPY5S\n68May9KsEoGmr2+pvm3psYn5/VXr+86yaQqIuPzAUJXVf4jVxQZQTiCR/SCOqK6U\n1GeYsoXCXUIRFNsW2h/PxpHRcnt+7+xK3TpvbhompnxVO75Cs4u8NhzpIbLPAQGy\nEuXNHZYVhG4QFRWw1LztFH4xRbkH+SA/8laP6VkCgYBmdaTCYBJWGUwAentZPuXx\nbSiw4oLd7lw0Unx58yA6yoeWzgIElAJ8D30rVELmrcK8wsYPcpX1wyDrxL3dwpIC\n9h9lANfRqyDfw1hFM8k5aw+gwqVQXQvmFayrmZBvcsylfwYpwfC8zUL8cnr2wNrD\ngdTMYZxxMk9n+0Zm44ON9Q==\n-----END PRIVATE KEY-----\n",
+  "client_email": "rank-bot-service-account@ranking-bot-315505.iam.gserviceaccount.com",
+  "client_id": "118242492459541712858",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rank-bot-service-account%40ranking-bot-315505.iam.gserviceaccount.com"
+}
