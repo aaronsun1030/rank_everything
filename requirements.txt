@@ -4,7 +4,6 @@ cffi==1.14.5
 chardet==4.0.0
 cryptography==3.4.7
 idna==2.10
-menuinst==1.4.16
 pip==21.1.1
 pycosat==0.6.3
 pycparser==2.20
