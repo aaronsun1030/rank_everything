@@ -16,6 +16,8 @@ chat_service = build('chat', 'v1', http=credentials.authorize(Http()))
 
 app = Flask(__name__)
 
+print(str(chat_service.spaces().list().execute()))
+
 
 @app.route('/', methods=['POST'])
 def on_event():
@@ -24,10 +26,12 @@ def on_event():
   if event['type'] == 'ADDED_TO_SPACE' and not event['space']['singleUserBotDm']:
     text = 'Thanks for adding me to "%s"!' % (event['space']['displayName'] if event['space']['displayName'] else 'this chat')
   elif event['type'] == 'MESSAGE':
-    text = 'You said: `%s`' % str(event) #event['message']['text']
+    text = 'You said: `%s`' % str(chat_service.spaces().list().execute()) #event['message']['text']
   else:
     return
-  return json.jsonify({'text': text})
+  return json.jsonify({'text': text, 'thread':"chet_cool"})
+
+
 
 
 if __name__ == '__main__':
